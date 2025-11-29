@@ -50,6 +50,44 @@ class Product {
         cout << "Quantity: " << this->quantity << endl;
     }
 };
+void addProduct(vector<Product>& products)
+{
+    string name;
+    int price;
+    int quantity;
+
+    cout << "Please enter name of the product: ";
+    cin >> name;
+
+    cout << "Please enter price of the product: ";
+    cin >> price;
+
+    cout << "Please enter quantity of the product: ";
+    cin >> quantity;
+
+    Product temp_product(name, price, quantity);
+    products.push_back(temp_product);
+
+    cout << "Product has been added successfully!" << endl;
+}
+
+void deleteProduct(vector<Product>& products) {
+    string name;
+    cout << "Please enter name of the product: ";
+    cin >> name;
+    bool found = false;
+    for (int i = 0; i < products.size(); i++) {
+        if (products[i].getName() == name) {
+            products.erase(products.begin() + i);
+            cout << "Product has been deleted successfully!" << endl;
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        cout << "Product hasn't been deleted successfully!" << endl;
+    }
+}
 int main() {
     vector<Product> products;
     string user_name;
@@ -57,6 +95,7 @@ int main() {
     cin >> user_name;
     int user_choose;
     cout << "Hi , " << user_name << " choose an option you want to do: " << endl;
+
     do {
         cout << "1. Add product" << endl;
         cout << "2. Delete product" << endl;
@@ -73,28 +112,11 @@ int main() {
 
         switch (user_choose) {
             case 1: {
-                string name;
-                int price;
-                int quantity;
-
-                cout << "Please enter name of the product: ";
-                cin >> name;
-
-                cout << "Please enter price of the product: ";
-                cin >> price;
-
-                cout << "Please enter quantity of the product: ";
-                cin >> quantity;
-
-                Product temp_product(name, price, quantity);
-                products.push_back(temp_product);
-
-                cout << "Product has been added successfully!" << endl;
+                addProduct(products);
                 break;
             }
             case 2: {
-                cout << "Please enter name of the product: ";
-                break;
+                deleteProduct(products);
             }
             case 3: {
                 cout << "Please enter price of the product: ";
