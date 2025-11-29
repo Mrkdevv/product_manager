@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -10,13 +9,13 @@ class Product {
     int price;
     int quantity;
     public:
-    Product(string name, int price, int quantity) {
+    Product(const string& name, int price, int quantity) {
         this->name = name;
         this->price = price;
         this->quantity = quantity;
     }
-    void setName(string name) {
-        if (name != "") {
+    void setName(const string& name) {
+        if (!name.empty()) {
             this->name = name;
         }
         else
@@ -37,22 +36,21 @@ class Product {
             cout << "Product quantity is empty" << endl;
     }
     string getName() {
-        return this->name;
+        return name;
     }
-    int getPrice() {
-        return this->price;
+    [[nodiscard]] double getPrice() const {
+        return price;
     }
-    int getQuantity() {
-        return this->quantity;
+    [[nodiscard]] int getQuantity() const {
+        return quantity;
     }
-    void printInfo() {
+    void printInfo() const {
         cout << "Name: " << this->name << endl;
         cout << "Price: " << this->price << endl;
         cout << "Quantity: " << this->quantity << endl;
     }
 };
 int main() {
-    Product product("noname", 0, 0);
     vector<Product> products;
     string user_name;
     cout << "Please enter your name:";
@@ -62,36 +60,62 @@ int main() {
     do {
         cout << "1. Add product" << endl;
         cout << "2. Delete product" << endl;
-        cout << "3. Buy product" << endl;
+        cout << "3. Change price to product" << endl;
         cout << "4. Print product" << endl;
         cout << "5. Quit" << endl;
         cin >> user_choose;
 
-        if (!cin.fail() && user_choose < 1  || user_choose > 5) {
+        if (cin.fail() || user_choose < 1 || user_choose > 5) {
             cin.clear();
             cout << "Please enter a valid choice!" << endl;
             continue;
         }
 
         switch (user_choose) {
-            case 1:
-                //11
+            case 1: {
+                string name;
+                int price;
+                int quantity;
+
+                cout << "Please enter name of the product: ";
+                cin >> name;
+
+                cout << "Please enter price of the product: ";
+                cin >> price;
+
+                cout << "Please enter quantity of the product: ";
+                cin >> quantity;
+
+                Product temp_product(name, price, quantity);
+                products.push_back(temp_product);
+
+                cout << "Product has been added successfully!" << endl;
                 break;
-            case 2:
-                //22
+            }
+            case 2: {
+                cout << "Please enter name of the product: ";
                 break;
-            case 3:
-                //33
+            }
+            case 3: {
+                cout << "Please enter price of the product: ";
                 break;
-            case 4:
-                //44
+            }
+            case 4: {
+                cout << "Please enter quantity of the product: ";
                 break;
-            case 5:
-                cout << 'Bye bye...' << endl;
+            }
+
+            case 5: {
+                cout << "Bye bye..." << endl;
                 break;
+            }
+            default: {
+                cout << "Unknown Error!" << endl;
+            }
+
         }
     }
-    while (user_choose < 1 || user_choose > 5);
+    while (user_choose != 5);
 }
 
 
