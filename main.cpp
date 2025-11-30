@@ -88,6 +88,38 @@ void deleteProduct(vector<Product>& products) {
         cout << "Product hasn't been deleted successfully!" << endl;
     }
 }
+
+void changePrice(vector<Product>& products) {
+    string name;
+    int price;
+    cout << "Please enter name of the product: ";
+    cin >> name;
+    bool found = false;
+    for (int i = 0; i < products.size(); i++) {
+        if (products[i].getName() == name) {
+            int new_price;
+            cout << "Please enter new price of the product: ";
+            cin >> new_price;
+
+            while (cin.fail() || new_price < 0)
+                {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Please enter new price of the product: ";
+                cin >> new_price;
+            }
+            products[i].setPrice(new_price);
+            cout << "Product has been changed successfully!" << endl;
+
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        cout << "Product hasn't been changed successfully!" << endl;
+    }
+
+}
 int main() {
     vector<Product> products;
     string user_name;
@@ -119,7 +151,7 @@ int main() {
                 deleteProduct(products);
             }
             case 3: {
-                cout << "Please enter price of the product: ";
+                changePrice(products);
                 break;
             }
             case 4: {
