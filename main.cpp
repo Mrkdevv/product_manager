@@ -47,7 +47,7 @@ class Product {
     void printInfo() const {
         cout << "Name: " << this->name << endl;
         cout << "Price: " << this->price << endl;
-        cout << "Quantity: " << this->quantity << endl;
+        cout << "Quantity: " << this->quantity << "\n" << endl;
     }
 };
 void addProduct(vector<Product>& products)
@@ -91,12 +91,11 @@ void deleteProduct(vector<Product>& products) {
 
 void changePrice(vector<Product>& products) {
     string name;
-    int price;
     cout << "Please enter name of the product: ";
     cin >> name;
     bool found = false;
-    for (int i = 0; i < products.size(); i++) {
-        if (products[i].getName() == name) {
+    for (auto &product : products) {
+        if (product.getName() == name) {
             int new_price;
             cout << "Please enter new price of the product: ";
             cin >> new_price;
@@ -108,7 +107,7 @@ void changePrice(vector<Product>& products) {
                 cout << "Please enter new price of the product: ";
                 cin >> new_price;
             }
-            products[i].setPrice(new_price);
+            product.setPrice(new_price);
             cout << "Product has been changed successfully!" << endl;
 
             found = true;
@@ -119,6 +118,12 @@ void changePrice(vector<Product>& products) {
         cout << "Product hasn't been changed successfully!" << endl;
     }
 
+}
+void printProducts(const vector<Product>& products) {
+    for (int i = 0; i < products.size(); i++) {
+        cout << "Product: " << "#" << i << endl;
+        products[i].printInfo();
+    }
 }
 int main() {
     vector<Product> products;
@@ -149,13 +154,14 @@ int main() {
             }
             case 2: {
                 deleteProduct(products);
+                break;
             }
             case 3: {
                 changePrice(products);
                 break;
             }
             case 4: {
-                cout << "Please enter quantity of the product: ";
+                printProducts(products);
                 break;
             }
 
